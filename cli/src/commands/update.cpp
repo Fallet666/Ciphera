@@ -19,16 +19,16 @@ namespace NCiphera::NCommands {
         }
 
         std::cout << "\n[2/4] Pulling latest images..." << std::endl;
-        NCiphera::NUtils::SudoRun("cd " + baseDir + " && docker compose pull");
+        NCiphera::NUtils::SudoRun("sh -c 'cd " + baseDir + " && docker compose pull'");
 
         std::cout << "\n[3/4] Recreating containers..." << std::endl;
-        NCiphera::NUtils::SudoRun("cd " + baseDir + " && docker compose up -d");
+        NCiphera::NUtils::SudoRun("sh -c 'cd " + baseDir + " && docker compose up -d'");
 
         std::cout << "\n[4/4] Cleaning up old images..." << std::endl;
         NCiphera::NUtils::SudoRun("docker image prune -f");
 
         std::cout << "\n[VERIFY] Checking services..." << std::endl;
-        NCiphera::NUtils::SudoRun("cd " + baseDir + " && docker compose ps");
+        NCiphera::NUtils::SudoRun("sh -c 'cd " + baseDir + " && docker compose ps'");
 
         std::cout << "\n=== Update complete ===" << std::endl;
 

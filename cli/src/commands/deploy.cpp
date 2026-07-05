@@ -105,8 +105,8 @@ namespace NCiphera::NCommands {
         );
 
         std::cout << "\n[4/5] Starting services..." << std::endl;
-        NCiphera::NUtils::SudoRun("cd " + baseDir + " && docker compose up -d");
-        NCiphera::NUtils::SudoRun("cd " + baseDir + " && docker compose ps");
+        NCiphera::NUtils::SudoRun("sh -c 'cd " + baseDir + " && docker compose up -d'");
+        NCiphera::NUtils::SudoRun("sh -c 'cd " + baseDir + " && docker compose ps'");
 
         std::cout << "\n[5/5] Verifying deployment..." << std::endl;
         NCiphera::NUtils::Run("curl -s https://" + matrixDomain + "/_matrix/client/versions | jq .");
