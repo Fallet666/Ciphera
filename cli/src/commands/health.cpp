@@ -44,7 +44,7 @@ namespace NCiphera::NCommands {
         const char* containers[] = {"matrix-synapse", "matrix-postgres", "matrix-element-web", "matrix-coturn"};
         for (const char* container : containers) {
             std::string cmd = "docker ps --format '{{.Names}} {{.Status}}' | grep " + std::string(container);
-            if (NCiphera::NUtils::Run(cmd) == 0) {
+            if (NCiphera::NUtils::SudoRun(cmd) == 0) {
                 std::cout << "  OK: " << container << " running" << std::endl;
             } else {
                 std::cout << "  FAIL: " << container << " not running" << std::endl;
@@ -53,10 +53,10 @@ namespace NCiphera::NCommands {
         }
 
         std::cout << "\n[4/6] Checking fail2ban..." << std::endl;
-        NCiphera::NUtils::Run("fail2ban-client status");
+        NCiphera::NUtils::SudoRun("fail2ban-client status");
 
         std::cout << "\n[5/6] Checking firewall..." << std::endl;
-        NCiphera::NUtils::Run("ufw status");
+        NCiphera::NUtils::SudoRun("ufw status");
 
         std::cout << "\n[6/6] Checking disk space..." << std::endl;
         NCiphera::NUtils::Run("df -h /opt/family-matrix");

@@ -10,32 +10,32 @@ namespace NCiphera::NCommands {
         std::cout << "=== Ciphera Setup ===" << std::endl;
 
         std::cout << "\n[1/4] Updating packages..." << std::endl;
-        NCiphera::NUtils::Run("apt update");
+        NCiphera::NUtils::SudoRun("apt update");
 
         std::cout << "\n[2/4] Installing required packages..." << std::endl;
-        NCiphera::NUtils::Run(
+        NCiphera::NUtils::SudoRun(
             "apt install -y "
             "docker.io docker-compose-plugin nginx certbot python3-certbot-nginx "
             "ufw fail2ban jq curl openssl rsync tar cron"
         );
 
         std::cout << "\n[3/4] Enabling services..." << std::endl;
-        NCiphera::NUtils::Run("systemctl enable --now docker");
-        NCiphera::NUtils::Run("systemctl enable --now nginx");
-        NCiphera::NUtils::Run("systemctl enable --now fail2ban");
+        NCiphera::NUtils::SudoRun("systemctl enable --now docker");
+        NCiphera::NUtils::SudoRun("systemctl enable --now nginx");
+        NCiphera::NUtils::SudoRun("systemctl enable --now fail2ban");
 
         std::cout << "\n[4/4] Creating project directories..." << std::endl;
-        NCiphera::NUtils::CreateDirectory("/opt/family-matrix/synapse");
-        NCiphera::NUtils::CreateDirectory("/opt/family-matrix/postgres");
-        NCiphera::NUtils::CreateDirectory("/opt/family-matrix/element");
-        NCiphera::NUtils::CreateDirectory("/opt/family-matrix/coturn");
-        NCiphera::NUtils::CreateDirectory("/opt/family-matrix/backups");
-        NCiphera::NUtils::CreateDirectory("/opt/family-matrix/scripts");
-        NCiphera::NUtils::CreateDirectory("/opt/family-matrix/secrets");
-        NCiphera::NUtils::Run("chmod 700 /opt/family-matrix/secrets");
+        NCiphera::NUtils::SudoRun("mkdir -p /opt/family-matrix/synapse");
+        NCiphera::NUtils::SudoRun("mkdir -p /opt/family-matrix/postgres");
+        NCiphera::NUtils::SudoRun("mkdir -p /opt/family-matrix/element");
+        NCiphera::NUtils::SudoRun("mkdir -p /opt/family-matrix/coturn");
+        NCiphera::NUtils::SudoRun("mkdir -p /opt/family-matrix/backups");
+        NCiphera::NUtils::SudoRun("mkdir -p /opt/family-matrix/scripts");
+        NCiphera::NUtils::SudoRun("mkdir -p /opt/family-matrix/secrets");
+        NCiphera::NUtils::SudoRun("chmod 700 /opt/family-matrix/secrets");
 
         std::cout << "\n[INFO] Checking for meterflow..." << std::endl;
-        NCiphera::NUtils::Run("docker ps -a | grep -i meterflow || true");
+        NCiphera::NUtils::SudoRun("docker ps -a | grep -i meterflow || true");
         NCiphera::NUtils::Run("systemctl list-units --type=service | grep -i meterflow || true");
         NCiphera::NUtils::Run("ps aux | grep -i meterflow | grep -v grep || true");
 

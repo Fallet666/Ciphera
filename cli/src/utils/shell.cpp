@@ -15,6 +15,10 @@ namespace NCiphera::NUtils {
         return std::system(command.c_str());
     }
 
+    int SudoRun(const std::string& command) {
+        return Run("sudo " + command);
+    }
+
     std::string Capture(const std::string& command) {
         std::array<char, 4096> buffer;
         std::string result;
@@ -38,6 +42,10 @@ namespace NCiphera::NUtils {
         }
 
         return result;
+    }
+
+    std::string SudoCapture(const std::string& command) {
+        return Capture("sudo " + command);
     }
 
     bool FileExists(const std::string& path) {
@@ -70,6 +78,18 @@ namespace NCiphera::NUtils {
         std::stringstream buffer;
         buffer << file.rdbuf();
         return buffer.str();
+    }
+
+    void SudoWriteFile(const std::string& path, const std::string& content) {
+        std::string escaped;
+        for (char ch : content) {
+            if (ch == '\'') {
+                escaped += "'\\''";
+            } else {
+                escaped += ch;
+            }
+        }
+        SudoRun("sh -c 'printf \"%s\" '\"'\"'" + escaped + "'\"'\"' > " + path + "'");
     }
 
 } // namespace NCiphera::NUtils

@@ -29,12 +29,12 @@ namespace NCiphera::NCommands {
         NCiphera::NUtils::CreateDirectory(backupPath);
 
         std::cout << "\n[1/3] Dumping PostgreSQL database..." << std::endl;
-        NCiphera::NUtils::Run(
+        NCiphera::NUtils::SudoRun(
             "docker exec matrix-postgres pg_dump -U synapse synapse > " + backupPath + "/synapse.sql"
         );
 
         std::cout << "\n[2/3] Archiving configs and media..." << std::endl;
-        NCiphera::NUtils::Run(
+        NCiphera::NUtils::SudoRun(
             "tar -czf " + backupPath + "/synapse-config-media.tar.gz "
             "-C " + baseDir + " "
             "synapse/homeserver.yaml "
@@ -46,14 +46,14 @@ namespace NCiphera::NCommands {
         );
 
         std::cout << "\n[3/3] Creating final archive..." << std::endl;
-        NCiphera::NUtils::Run(
+        NCiphera::NUtils::SudoRun(
             "tar -czf " + backupDir + "/" + backupName + ".tar.gz "
             "-C " + backupDir + " " + backupName
         );
-        NCiphera::NUtils::Run("rm -rf " + backupPath);
+        NCiphera::NUtils::SudoRun("rm -rf " + backupPath);
 
         std::cout << "\n[CLEANUP] Removing old backups (>14 days)..." << std::endl;
-        NCiphera::NUtils::Run(
+        NCiphera::NUtils::SudoRun(
             "find " + backupDir + " -type f -name 'matrix-backup-*.tar.gz' -mtime +14 -delete"
         );
 

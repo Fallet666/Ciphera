@@ -24,16 +24,16 @@ namespace NCiphera::NCommands {
         std::string turnDomain = config.Get("TURN_DOMAIN");
 
         std::cout << "\n[1/5] Obtaining TLS certificates..." << std::endl;
-        NCiphera::NUtils::Run("nginx -t");
-        NCiphera::NUtils::Run("systemctl reload nginx");
-        NCiphera::NUtils::Run(
+        NCiphera::NUtils::SudoRun("nginx -t");
+        NCiphera::NUtils::SudoRun("systemctl reload nginx");
+        NCiphera::NUtils::SudoRun(
             "certbot certonly --nginx "
             "-d " + matrixDomain + " "
             "-d " + chatDomain + " "
             "-d " + turnDomain + " "
             "--non-interactive --agree-tos --email admin@" + matrixDomain
         );
-        NCiphera::NUtils::Run("certbot renew --dry-run");
+        NCiphera::NUtils::SudoRun("certbot renew --dry-run");
 
         std::cout << "\n[2/5] Configuring nginx..." << std::endl;
         std::string nginxConf =
@@ -90,13 +90,13 @@ namespace NCiphera::NCommands {
             "    }\n"
             "}\n";
 
-        NCiphera::NUtils::WriteFile("/etc/nginx/sites-available/family-matrix.conf", nginxConf);
-        NCiphera::NUtils::Run("ln -sf /etc/nginx/sites-available/family-matrix.conf /etc/nginx/sites-enabled/family-matrix.conf");
-        NCiphera::NUtils::Run("nginx -t");
-        NCiphera::NUtils::Run("systemctl reload nginx");
+        NCiphera::NUtils::SudoWriteFile("/etc/nginx/sites-available/family-matrix.conf", nginxConf);
+        NCiphera::NUtils::SudoRun("ln -sf /etc/nginx/sites-available/family-matrix.conf /etc/nginx/sites-enabled/family-matrix.conf");
+        NCiphera::NUtils::SudoRun("nginx -t");
+        NCiphera::NUtils::SudoRun("systemctl reload nginx");
 
         std::cout << "\n[3/5] Generating Synapse config..." << std::endl;
-        NCiphera::NUtils::Run(
+        NCiphera::NUtils::SudoRun(
             "docker run --rm "
             "-v " + baseDir + "/synapse:/data "
             "-e SYNAPSE_SERVER_NAME=" + matrixDomain + " "
@@ -105,8 +105,8 @@ namespace NCiphera::NCommands {
         );
 
         std::cout << "\n[4/5] Starting services..." << std::endl;
-        NCiphera::NUtils::Run("cd " + baseDir + " && docker compose up -d");
-        NCiphera::NUtils::Run("cd " + baseDir + " && docker compose ps");
+        NCiphera::NUtils::SudoRun("cd " + baseDir + " && docker compose up -d");
+        NCiphera::NUtils::SudoRun("cd " + baseDir + " && docker compose ps");
 
         std::cout << "\n[5/5] Verifying deployment..." << std::endl;
         NCiphera::NUtils::Run("curl -s https://" + matrixDomain + "/_matrix/client/versions | jq .");

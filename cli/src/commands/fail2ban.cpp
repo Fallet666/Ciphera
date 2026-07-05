@@ -29,14 +29,14 @@ namespace NCiphera::NCommands {
             "bantime = 6h\n";
 
         std::cout << "\n[1/3] Configuring SSH jail..." << std::endl;
-        NCiphera::NUtils::WriteFile("/etc/fail2ban/jail.d/sshd.local", sshdConfig);
+        NCiphera::NUtils::SudoWriteFile("/etc/fail2ban/jail.d/sshd.local", sshdConfig);
 
         std::cout << "\n[2/3] Configuring nginx rate-limit jail..." << std::endl;
-        NCiphera::NUtils::WriteFile("/etc/fail2ban/jail.d/nginx-limit-req.local", nginxConfig);
+        NCiphera::NUtils::SudoWriteFile("/etc/fail2ban/jail.d/nginx-limit-req.local", nginxConfig);
 
         std::cout << "\n[3/3] Restarting fail2ban..." << std::endl;
-        NCiphera::NUtils::Run("systemctl restart fail2ban");
-        NCiphera::NUtils::Run("fail2ban-client status");
+        NCiphera::NUtils::SudoRun("systemctl restart fail2ban");
+        NCiphera::NUtils::SudoRun("fail2ban-client status");
 
         std::cout << "\n=== Fail2ban configured ===" << std::endl;
 
