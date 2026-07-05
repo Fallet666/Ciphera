@@ -25,7 +25,7 @@ namespace NCiphera::NCommands {
         NCiphera::NUtils::SudoRun("ufw allow 49160:49200/udp");
 
         std::cout << "\n[3/3] Enabling firewall..." << std::endl;
-        NCiphera::NUtils::SudoRun("echo 'y' | ufw enable");
+        NCiphera::NUtils::SudoRun("sh -c 'echo y | ufw enable'");
         NCiphera::NUtils::SudoRun("ufw status verbose");
 
         std::cout << "\n=== Firewall configured ===" << std::endl;
