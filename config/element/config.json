@@ -1,8 +1,8 @@
 {
   "default_server_config": {
     "m.homeserver": {
-      "base_url": "https://matrix.ru.potapovotrap.online",
-      "server_name": "matrix.ru.potapovotrap.online"
+      "base_url": "https://api.potapovotrap.online",
+      "server_name": "api.potapovotrap.online"
     }
   },
   "disable_custom_urls": true,

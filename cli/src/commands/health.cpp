@@ -13,8 +13,8 @@ namespace NCiphera::NCommands {
         const std::string baseDir = "/opt/family-matrix";
         const std::string envPath = baseDir + "/.env";
 
-        std::string matrixDomain = "matrix.ru.potapovotrap.online";
-        std::string chatDomain = "chat.ru.potapovotrap.online";
+        std::string matrixDomain = "api.potapovotrap.online";
+        std::string chatDomain = "ciphera.potapovotrap.online";
 
         if (NCiphera::NUtils::FileExists(envPath)) {
             NCiphera::NUtils::TConfig config(envPath);

@@ -1,5 +1,5 @@
-server_name: "matrix.ru.potapovotrap.online"
-public_baseurl: "https://matrix.ru.potapovotrap.online/"
+server_name: "api.potapovotrap.online"
+public_baseurl: "https://api.potapovotrap.online/"
 
 listeners:
   - port: 8008
@@ -47,9 +47,9 @@ trusted_key_servers: []
 suppress_key_server_warning: true
 
 turn_uris:
-  - "turn:turn.ru.potapovotrap.online:3478?transport=udp"
-  - "turn:turn.ru.potapovotrap.online:3478?transport=tcp"
-  - "turns:turn.ru.potapovotrap.online:5349?transport=tcp"
+  - "turn:turn.potapovotrap.online:3478?transport=udp"
+  - "turn:turn.potapovotrap.online:3478?transport=tcp"
+  - "turns:turn.potapovotrap.online:5349?transport=tcp"
 
 turn_shared_secret: "PASTE_TURN_SHARED_SECRET_HERE"
 turn_user_lifetime: 1h
