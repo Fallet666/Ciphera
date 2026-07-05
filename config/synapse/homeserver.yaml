@@ -1,0 +1,73 @@
+server_name: "matrix.ru.potapovotrap.online"
+public_baseurl: "https://matrix.ru.potapovotrap.online/"
+
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['0.0.0.0']
+    resources:
+      - names: [client, federation]
+        compress: false
+
+database:
+  name: psycopg2
+  args:
+    user: synapse
+    password: "PASTE_POSTGRES_PASSWORD_HERE"
+    database: synapse
+    host: postgres
+    cp_min: 5
+    cp_max: 10
+
+enable_registration: true
+registration_requires_token: true
+enable_registration_without_verification: false
+
+registration_shared_secret: "PASTE_REGISTRATION_SHARED_SECRET_HERE"
+
+enable_3pid_lookup: false
+allow_guest_access: false
+
+max_upload_size: 200M
+
+media_upload_limits:
+  - time_period: 1h
+    max_size: 500M
+  - time_period: 1d
+    max_size: 2G
+
+url_preview_enabled: false
+
+federation_domain_whitelist: []
+
+trusted_key_servers: []
+
+suppress_key_server_warning: true
+
+turn_uris:
+  - "turn:turn.ru.potapovotrap.online:3478?transport=udp"
+  - "turn:turn.ru.potapovotrap.online:3478?transport=tcp"
+  - "turns:turn.ru.potapovotrap.online:5349?transport=tcp"
+
+turn_shared_secret: "PASTE_TURN_SHARED_SECRET_HERE"
+turn_user_lifetime: 1h
+turn_allow_guests: false
+
+rc_login:
+  address:
+    per_second: 0.003
+    burst_count: 5
+  account:
+    per_second: 0.003
+    burst_count: 5
+  failed_attempts:
+    per_second: 0.001
+    burst_count: 3
+
+rc_registration:
+  per_second: 0.001
+  burst_count: 2
+
+log_config: "/data/log.config"

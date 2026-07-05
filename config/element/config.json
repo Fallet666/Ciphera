@@ -1,0 +1,23 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "https://matrix.ru.potapovotrap.online",
+      "server_name": "matrix.ru.potapovotrap.online"
+    }
+  },
+  "disable_custom_urls": true,
+  "disable_guests": true,
+  "brand": "Family Messenger",
+  "default_theme": "dark",
+  "show_labs_settings": false,
+  "features": {},
+  "setting_defaults": {
+    "breadcrumbs": true
+  },
+  "integrations_ui_url": "",
+  "integrations_rest_url": "",
+  "integrations_widgets_urls": [],
+  "jitsi": {
+    "preferred_domain": ""
+  }
+}

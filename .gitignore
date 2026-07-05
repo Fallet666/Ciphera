@@ -1,0 +1,11 @@
+.env
+secrets/
+backups/
+media_store/
+*.log
+*.sql
+*.tar.gz
+.DS_Store
+postgres/
+build/
+cli/build/
