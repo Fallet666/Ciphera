@@ -62,7 +62,7 @@ namespace NCiphera::NCommands {
             "        proxy_set_header X-Forwarded-Proto $scheme;\n"
             "        proxy_set_header Host $host;\n"
             "    }\n\n"
-            "    location ~ ^(/_matrix|/_synapse/client) {\n"
+            "    location ~ ^(/_matrix|/_synapse/client|/_synapse/admin) {\n"
             "        limit_req zone=matrix_api burst=100 nodelay;\n"
             "        limit_conn addr 30;\n"
             "        proxy_pass http://127.0.0.1:8008;\n"
@@ -117,8 +117,7 @@ namespace NCiphera::NCommands {
         std::cout << "  1. Edit homeserver.yaml with secrets from .env" << std::endl;
         std::cout << "  2. Edit turnserver.conf with TURN secret" << std::endl;
         std::cout << "  3. Restart: docker compose restart" << std::endl;
-        std::cout << "  4. Create admin: docker exec -it matrix-synapse register_new_matrix_user -c /data/homeserver.yaml http://localhost:8008 --admin" << std::endl;
-        std::cout << "  5. Run: ciphera tokens" << std::endl;
+        std::cout << "  4. Create admin: docker exec matrix-synapse register_new_matrix_user -k <SECRET> --admin --user admin --password <PASS> http://localhost:8008" << std::endl;
 
         return 0;
     }
